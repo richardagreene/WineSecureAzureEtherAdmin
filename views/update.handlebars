@@ -1,0 +1,314 @@
+
+<form id="saveForm" >
+<div class="container">
+  <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Update wine details</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <span class="mdl-list__item-primary-content">
+        <span id="address" hidden>{{this.address}}</span>
+        <span id="status" hidden>{{this.status}}</span>
+        <span id="colour" hidden >{{this.colour}}</span>
+      </span>
+      <div id="ownerContainer" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" name="address" id="owner" required >
+        <label class="mdl-textfield__label" for="owner">your address</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" name="password" id="password" required >
+        <label class="mdl-textfield__label" for="password">your password</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" name="winename" id="winename" required value="{{this.name}}">
+        <label class="mdl-textfield__label" for="winename">Name</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="vineyard" required value="{{this.vineyard}}">
+        <label class="mdl-textfield__label" for="vineyard">vineyard</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="grapeVariety" required value="{{this.grapeVariety}}">
+        <label class="mdl-textfield__label" for="grapeVariety">Grape Variety</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label id="wineColour-RedLabel" class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="wineColour-Red">
+          <input type="radio" id="wineColour-Red" class="mdl-radio__button" name="colouroption" value="red">
+          <span class="mdl-radio__label">Red</span>
+        </label>
+        <label id="wineColour-WhiteLabel" class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="wineColour-White">
+          <input type="radio" id="wineColour-White" class="mdl-radio__button" name="colouroption" value="white">
+          <span class="mdl-radio__label">White</span>
+        </label>
+        <label id="wineColour-RoseLabel" class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="wineColour-Rose">
+          <input type="radio" id="wineColour-Rose" class="mdl-radio__button" name="colouroption" value="rose">
+          <span class="mdl-radio__label">Rose</span>
+        </label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="alcholContent" required value="{{this.alcoholLevel}}">
+        <label class="mdl-textfield__label" for="alcholContent">Alcohol Content</label>
+      </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a id="save" name="save" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Save
+      </a>
+      <div id="waitSpinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" hidden="hidden"></div>
+      <a id="transfer" name="transfer" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Transfer
+      </a>
+      <a id="consume" name="consume" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Consume
+      </a>
+      <a id="details" name="details" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Details
+      </a>
+    </div>
+    <div class="mdl-card__menu">
+      <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+        <i class="material-icons">share</i>
+      </button>
+    </div>
+  </form>
+<div id="messageBox" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>
+  <dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Transfer Ownership</h4>
+    <div class="mdl-dialog__content">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="owner">
+        <label class="mdl-textfield__label" for="owner">Owner</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="newOwner">
+        <label class="mdl-textfield__label" for="newOwner">new Owner</label>
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button id="dlgOK" type="button" class="mdl-button">OK</button>
+      <button id="dlgClose" type="button" class="mdl-button close">Cancel</button>
+    </div>
+  </dialog>
+</div>
+
+<style>
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color:#fff;
+  height: 176px;
+  background: url('/assets/wineGrapes.jpeg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.mdl-textfield { width: 100%; }
+</style>
+
+
+<script>
+
+////////  -- Deploy a contract to Eth -- ///////
+$(document).ready(function(){
+
+  var dialog = document.querySelector('dialog');
+  // set the details
+  var obj = localStorage.getItem('wineSecure');
+  if(obj) {
+    $("#owner").val(JSON.parse(obj).owner);
+    $("#ownerContainer").addClass("is-dirty");   
+  }
+  $("#owner").val(JSON.parse(obj).owner);
+
+  // if consumed disable buttons.
+  if($("#status").text() == "Consumed") {
+      $("#save").attr("disabled", "disabled")
+      $("#consume").attr("disabled", "disabled")
+      $("#transfer").attr("disabled", "disabled")
+  }
+
+  // set the radio buttons
+  var col = $("#colour").text();
+  if(col == "red") {
+    $("#wineColour-Red").attr("checked", true);
+    $("#wineColour-RedLabel").addClass( "is-checked" );
+  };
+  if(col == "white") {
+    $("#wineColour-White").attr("checked", true); 
+    $("#wineColour-WhiteLabel").addClass("is-checked");
+  }
+  if(col == "rose") {
+    $("#wineColour-Rose").attr("checked", (col == "rose")); 
+    $("#wineColour-RoseLabel").addClass("is-checked");
+  };
+  var address = $("#address").text();  
+  var add = $("#address").text();
+
+  $("#transfer").click(function() {
+    if($("#status").text() == "Consumed") { return; }
+    $("#transfer").attr("disabled", "disabled")
+    dialog.showModal();
+  });
+
+  $("#dlgOK").click(function() {
+    $("#waitSpinner").removeAttr("hidden")
+    var owner= $("#owner").val();
+    var newOwner= $("#newOwner").val();
+    try{
+      $.ajax({
+        url: "/wineSecure/transfer",
+        type: "post",
+        data: { address : address, owner: owner, newOwner: newOwner },
+        error: ((err) => {
+          var toast=document.querySelector('#messageBox');
+          toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, please try again later.'});
+          console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+        }),
+        success: ((data) => {
+          var toast=document.querySelector('#messageBox');
+          if(data)
+            toast.MaterialSnackbar.showSnackbar({message: 'Transfered'});
+          else
+            toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, please try again later.'});
+        }),
+        complete:(() => {
+          dialog.close();
+          $("#transfer").removeAttr("disabled");
+          $("#waitSpinner").attr("hidden", "hidden")
+        })  
+      });
+    } catch {} 
+  });
+
+  $("#dlgClose").click(function() {
+    $("#transfer").removeAttr("disabled");
+    dialog.close();
+  });
+
+  $("#consume").click(function() {
+    if($("#status").text() == "Consumed") { return; }
+
+    // ensure form is valid
+    if(!$("#saveForm").valid()) return false;
+    var add = $('#address').text()
+    var o = $('#owner').val()
+    var p = $('#password').val()
+
+    try{
+      var owner= $("#owner").val();
+      $.ajax({
+        url: "/wineSecure/consume",
+        type: "post",
+        data: { address: add, owner: o, password: p },
+        error: ((err) => {
+          var toast=document.querySelector('#messageBox');
+          toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, please try again later.'});
+          console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+        }),
+        success: ((data) => {
+          var toast=document.querySelector('#messageBox');
+          if(data)
+            toast.MaterialSnackbar.showSnackbar({message: 'Consumed'});
+          else
+            toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, please try again later.'});
+        }),
+        complete:(() => {
+          $("#waitSpinner").attr("hidden", "hidden")
+        })  
+      });
+    } catch {} 
+  });
+
+  $("#save").click(function() {
+    if($("#status").text() == "Consumed") { return; }
+    // ensure form is valid
+    if(!$("#saveForm").valid()) return false;
+
+    $("#save").attr("disabled", "disabled")
+    $("#waitSpinner").removeAttr("hidden")
+
+    // get the values
+    var add = $('#address').text()
+    var o = $('#owner').val()
+    var p = $('#password').val()
+    var n = $('#winename').val()
+    var v = $('#vineyard').val()
+    var g = $('#grapeVariety').val()
+    var c = $('input[name=colouroption]:checked').val();
+    var a = $('#alcholContent').val()
+
+    if(isNaN(a)){
+      var toast=document.querySelector('#messageBox');
+      toast.MaterialSnackbar.showSnackbar({message: 'Error alchol is not a number.'});
+      $("#save").removeAttr("disabled");
+      $("#waitSpinner").attr("hidden", "hidden")
+      return;
+    }
+
+    var toast=document.querySelector('#messageBox');
+    toast.MaterialSnackbar.showSnackbar({message: 'Working: please wait for confirmation.'});
+    try{
+      // submit
+      $.ajax({
+        url: "/wineSecure/updateContract",
+        type: "post",
+        data: { address: add, owner: o, password: p, name : n, vineyard:v, grapeVariety:g, colour:c, alcoholLevel:a },
+        error: ((err) => {
+          var toast=document.querySelector('#messageBox');
+          toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, check details and try again.'});
+          console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+        }),
+        success: ((data) => {
+          var toast=document.querySelector('#messageBox');
+          if(data)
+            toast.MaterialSnackbar.showSnackbar({message: 'Updated correctly.'});
+          else
+            toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, check details and try again.'});
+        }),
+        complete:(() => {
+          $("#save").removeAttr("disabled");
+          $("#waitSpinner").attr("hidden", "hidden")
+        })  
+      });
+    } catch {}
+  });
+
+  $("#details").click(function() {
+    var address = $("#address").text();  
+    window.location = "/query/"+address;
+  });
+
+  $("#saveForm").validate({
+      rules: {
+          winename: {
+              required: true
+          },
+          vineyard: {
+              required: true
+          },
+          grapeVariety: {
+              required: true
+          },
+          colouroption: {
+              required: true
+          },
+          alcholContent: {
+              required: true
+          }
+      },
+  });
+});
+
+</script>

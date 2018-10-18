@@ -1,0 +1,118 @@
+
+<form id="saveForm" >
+<div class="container">
+  <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Register as a Supplier</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+       <label class="mdl-text">Register as a user to allow transfer of ownership.  Simply enter a password for your account.</label>
+      </div>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" name="password" id="password" required value="{{this.password}}">
+        <label class="mdl-textfield__label" for="password">password</label>
+      </div>
+
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+       <label class="mdl-textfield__label" >Address</label>
+       <label id="result" class="mdl-textfield" ></label>
+      </div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a id="save" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Save
+      </a>
+    </div>
+    <div id="waitSpinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" hidden="hidden"></div>
+    <div class="mdl-card__menu">
+      <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+        <i class="material-icons">share</i>
+      </button>
+    </div>
+  </form>
+<div id="messageBox" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>
+
+<style>
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color:#fff;
+  height: 176px;
+  background: url('/assets/wineGrapes.jpeg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.mdl-textfield { width: 100%; }
+</style>
+
+
+<script>
+
+////////  -- Deploy a contract to Eth -- ///////
+$(document).ready(function(){
+
+  var dialog = document.querySelector('dialog');
+
+  // set the radio buttons
+  $("#save").click(function() {
+    // ensure form is valid
+    if(!$("#saveForm").valid()) return false;
+    $("#save").attr("disabled", "disabled")
+    $("#waitSpinner").removeAttr("hidden")
+
+    var p= $("#password").val();
+    try{
+      $.ajax({
+        url: "/wineSecure/supplier",
+        type: "post",
+        data: { password : p },
+        error: ((err) => {
+          var toast=document.querySelector('#messageBox');
+          toast.MaterialSnackbar.showSnackbar({message: 'Error creating account, please try again later.'});
+          console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+        }),
+        success: ((data) => {
+          var toast=document.querySelector('#messageBox');
+          if(data){
+            toast.MaterialSnackbar.showSnackbar({message: 'Created'});
+            console.log(data);
+            $("#result").text(data);
+            // Save the Object
+            var ownerObject = { 'owner': data };
+            localStorage.setItem('wineSecure', JSON.stringify(ownerObject));
+          }
+        }),
+        complete:(() => {
+          $("#save").removeAttr("disabled");
+          $("#waitSpinner").attr("hidden", "hidden")
+        })  
+      });
+    } catch {} 
+  });
+
+  $("#saveForm").validate({
+      rules: {
+          password: {
+              required: true
+          }
+      },
+  });
+});
+
+</script>

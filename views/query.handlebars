@@ -1,0 +1,221 @@
+<div class="container">
+  <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Wine Details</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <span id="status" hidden>{{this.status}}</span>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <div class="mdl-textfield__floating-label">
+          <input class="mdl-textfield__input" type="text" id="address">
+          <label class="mdl-textfield__label" for="sample-expandable">Contract</label>
+        </div>
+      </div>
+      <label id="search" class="mdl-button mdl-js-button mdl-button--icon" for="address" >
+        <i class="material-icons">search</i>
+      </label>
+
+      <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+            <a href="#code-panel" class="mdl-tabs__tab is-active">Code</a>
+            <a href="#details-panel" class="mdl-tabs__tab">Details</a>
+            <a href="#transactions-panel" class="mdl-tabs__tab">History</a>
+        </div>
+
+        <div class="mdl-tabs__panel is-active" id="code-panel">
+            <!--   QR Code   -->
+          {{#if this.name}}
+            <ul class="demo-list-two mdl-list">            
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span id="addContract">{{this.address}}</span>
+                  <span class="mdl-list__item-sub-title">address</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item">
+                <img src="/qr/{{this.address}}">
+              </li>
+            </ul>
+          {{else}}
+            <h4>Unable to find wine details</h4>
+          {{/if}}
+        </div>
+
+        <div class="mdl-tabs__panel" id="details-panel">
+            <!--   Details   -->
+            {{#if this.name}}
+            <ul class="demo-list-two mdl-list">
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.address}}</span>
+                  <span class="mdl-list__item-sub-title">address</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.owner}}</span>
+                  <span class="mdl-list__item-sub-title">owner</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.name}}</span>
+                  <span class="mdl-list__item-sub-title">name</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.vineyard}}</span>
+                  <span class="mdl-list__item-sub-title">vineyard</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.grapeVariety}}</span>
+                  <span class="mdl-list__item-sub-title">grape variety</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.colour}}</span>
+                  <span class="mdl-list__item-sub-title">colour</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.alcoholLevel}}</span>
+                  <span class="mdl-list__item-sub-title">alcohol level</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.status}}</span>
+                  <span class="mdl-list__item-sub-title">status</span>
+                </span>
+              </li>
+
+            </ul>
+            {{else}}
+              <h4>Unable to find wine details</h4>
+            {{/if}}
+        </div>
+
+        <div class="mdl-tabs__panel" id="transactions-panel">
+            {{#if this.name}}
+            <!--  transaction history   -->
+            <ul class="demo-list-three mdl-list">
+              <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                  <span>{{this.address}}</span>
+                  <span class="mdl-list__item-sub-title">address</span>
+                </span>
+              </li>
+            </ul>
+            <div class="table-container">
+              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="history" width="100%">
+                <thead>
+                  <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Event</th>
+                    <th class="mdl-data-table__cell--non-numeric">Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            {{else}}
+              <h4>Unable to find wine details</h4>
+            {{/if}}
+        </div>
+      </div>
+
+
+    <div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/register">
+        Register
+      </a>
+      <a id="update" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/update/{{this.address}}">
+        Update
+      </a>
+    </div>
+    <div class="mdl-card__menu">
+      <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+        <i class="material-icons">share</i>
+      </button>
+    </div>
+  <div id="messageBox" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button"></button>
+  </div>
+</div>
+
+<style>
+.mdl-textfield { width: 90%; }
+.mdl-list__item { padding-bottom: 0px; padding-top: 0px; }
+.mdl-list__item--two-line { height: 40px; }
+.table-container { max-height: 300px; overflow-y: auto; }
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color:darkslateblue;
+  height: 176px;
+  background: url('/assets/wineImage.jpeg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+</style>
+
+<script>
+
+////////  -- Deploy a contract to Eth -- ///////
+$(document).ready(function(){
+
+  // if consumed disable buttons.
+  if($("#status").text() == "Consumed") {
+      $("#update").attr("disabled", "disabled")
+  }
+
+  if($("#addContract").text() != "")
+    findContractHistory($("#addContract").text());
+
+  $("#search").click(function() {
+    var address=$('#address').val();
+    window.location = "/query/"+address;
+  });
+});
+
+function findContractHistory(address) {
+    try{
+      // submit
+      $.ajax({
+        url: "/wineSecure/history/"+address,
+        type: "get",
+        error: ((err) => {
+          var toast=document.querySelector('#messageBox');
+          toast.MaterialSnackbar.showSnackbar({message: 'Error on submission, please try again later.'});
+          console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+        }),
+        success: ((data) => {
+          console.log(data);
+          data.forEach((row) => {
+            $('#history > tbody:last-child').append('<tr><td class="mdl-data-table__cell--non-numeric">'+row.message+'</td><td class="mdl-data-table__cell--non-numeric">'+row.date+'</td></tr>');
+          });
+        }),
+        complete:(() => {
+          $("#register").removeAttr("disabled");
+          $("#waitSpinner").attr("hidden", "hidden")
+        })  
+      });
+    } catch {}
+}
+
+</script>
