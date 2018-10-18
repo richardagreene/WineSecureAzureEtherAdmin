@@ -14,7 +14,7 @@
     "express-handlebars": "~3.0.0",
     "express-session": "^1.15.5",
     "jquery-validation": "^1.18.0",
-    "moment": "~2.17.1",
+    "moment": "^2.17.1",
     "promise": "~7.1.1",
     "qr-image": "^3.2.0",
     "web3": "~0.19.1"
